@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kunal Sawant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff6a00, #ee0979);
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            padding: 80px 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #fff;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .links a, .contact {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            border: 2px solid white;
+            border-radius: 30px;
+            transition: all 0.4s ease;
+        }
+
+        .links a:hover, .contact:hover {
+            background: #fff;
+            color: #ee0979;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .romantic-line {
+            font-size: 1.2em;
+            margin-top: 40px;
+            color: #ffb6c1;
+            text-shadow: 0 0 15px #fff;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 1em;
+            color: #fff;
+            opacity: 0.8;
+            text-shadow: 0 0 10px #fff;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="container">
+        <h1>Hi, I’m Kunal Sawant</h1>
+        <p>
+            A passionate college student and a web developer in the making, crafting beautiful and interactive websites that tell stories and create emotions. 💻✨  
+            <br><br>
+            My journey in web development is about turning ideas into reality with clean code, elegant designs, and animations that breathe life into screens. Every website I build is a piece of art, made with love and passion.  
+            <br><br>
+            But beyond all this tech, there’s someone who makes my world truly meaningful. ❤ She’s my calm in the chaos, my laughter in sadness, my strength in weakness. With her, even silence speaks.  
+            <br><br>
+            Love isn’t just a feeling; it’s a promise. And my promise is simple – no matter where life takes us, I’ll always choose her, every single day. 🌸  
+        </p>
+        <div class="links">
+            <a href="https://instagram.com/Mr.kunalsawant_1728" target="_blank">Instagram</a>
+            <a href="mailto:kunalssawant09@gmail.com">Email Me</a>
+            <div class="contact">Call: 8087990502</div>
+        </div>
+        <p class="romantic-line">
+            "Every little thing reminds me of you – from the stars above to the butterflies that flutter by. You are my peace, my smile, my dream… my forever."
+        </p>
+        <p style="margin-top:30px;">
+            Want a beautiful website like this? <br> 📧 <strong>Email me now!</strong>
+        </p>
+    </div>
+
+    <footer>© Kunal_Sawant_1728</footer>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            const btn = document.querySelector('.toggle-btn');
+            if (document.body.classList.contains("dark-mode")) {
+                btn.textContent = "☀ Light Mode";
+            } else {
+                btn.textContent = "🌙 Dark Mode";
+            }
+        }
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const butterflies = [];
+        const stars = [];
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        class Butterfly {
+            constructor() {
+                this.x = random(0, canvas.width);
+                this.y = random(0, canvas.height);
+                this.size = random(15, 30);
+                this.speedX = random(-0.5, 0.5);
+                this.speedY = random(-0.5, 0.5);
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(255, 182, 193, 0.7)';
+                ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                this.draw();
+            }
+        }
+
+        class Star {
+            constructor() {
+                this.x = random(0, canvas.width);
+                this.y = random(0, canvas.height);
+                this.length = random(50, 100);
+                this.opacity = random(0.3, 0.7);
+                this.speed = random(1, 3);
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.strokeStyle = rgba(255,255,255,${this.opacity});
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + this.length, this.y);
+                ctx.stroke();
+            }
+            update() {
+                this.x += this.speed;
+                if (this.x > canvas.width) this.x = 0 - this.length;
+                this.draw();
+            }
+        }
+
+        for (let i = 0; i < 25; i++) butterflies.push(new Butterfly());
+        for (let i = 0; i < 8; i++) stars.push(new Star());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            butterflies.forEach(b => b.update());
+            stars.forEach(s => s.update());
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
